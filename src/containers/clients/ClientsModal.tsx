@@ -1,33 +1,23 @@
 import React from 'react';
 import Modal from 'react-modal';
+import { TClientNew } from '../../store/types/clients.types';
+import ClientForm from './ClientForm';
 
 type Props = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSave: (client: TClientNew) => void;
 };
 
-export default function ClientsModal({ isOpen, setIsOpen }: Props) {
+export default function ClientsModal({ isOpen, setIsOpen, handleSave }: Props) {
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={() => setIsOpen(false)}
-      style={customStyles}
       contentLabel="Example Modal"
+      className="kbmodal"
     >
-      <button type="button" onClick={() => setIsOpen(false)}>
-        Close
-      </button>
+      <ClientForm setIsOpen={setIsOpen} onSave={handleSave} />
     </Modal>
   );
 }
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-  },
-};

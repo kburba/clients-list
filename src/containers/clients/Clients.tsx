@@ -1,19 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClients } from '../../store/actions/clients.actions';
+import { getClients, saveClient } from '../../store/actions/clients.actions';
 import { RootState } from '../../store/reducers';
-import { ClientsState } from '../../store/types/clients.types';
+import {
+  ClientsActions,
+  ClientsState,
+  TClientNew,
+} from '../../store/types/clients.types';
 import ClientsModal from './ClientsModal';
 import ClientsTable from './ClientsTable';
 
 export default function Clients() {
   const [modalIsOpen, setIsOpen] = useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<ClientsActions>>();
 
   useEffect(() => {
     dispatch(getClients());
   }, [dispatch]);
+
+  function handleSave(client: TClientNew) {
+    console.log('saved', client);
+    dispatch(saveClient(client));
+  }
 
   const { clients } = useSelector<
     RootState,
@@ -30,14 +39,18 @@ export default function Clients() {
         <h1>Clients</h1>
         <button
           type="button"
-          className="kbbutton"
+          className="kbbutton primary"
           onClick={() => setIsOpen(true)}
         >
           Add Client
         </button>
       </div>
       {clients.length > 0 && <ClientsTable clients={clients} />}
-      <ClientsModal isOpen={modalIsOpen} setIsOpen={setIsOpen} />
+      <ClientsModal
+        isOpen={modalIsOpen}
+        setIsOpen={setIsOpen}
+        handleSave={handleSave}
+      />
     </div>
   );
 }
