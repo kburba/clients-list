@@ -11,15 +11,17 @@ import { ClientsActions, TClient } from '../../store/types/clients.types';
 
 type Props = {
   clients: TClient[];
+  onEditClick: (item: TClient) => void;
 };
 
-export default function ClientsTable({ clients }: Props) {
+export default function ClientsTable({ clients, onEditClick }: Props) {
   const dispatch = useDispatch<Dispatch<ClientsActions>>();
 
   const TABLE_ACTIONS: TableAction[] = [
     {
       action: (item: TClient) => {
         console.log('edit', item);
+        onEditClick(item);
       },
       key: TableButtonTypes.EDIT,
     },

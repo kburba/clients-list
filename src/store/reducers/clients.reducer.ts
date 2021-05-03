@@ -10,6 +10,18 @@ const clientsReducer = (
   action: ClientsActions
 ): ClientsState => {
   switch (action.type) {
+    case CLIENTS_ACTIONS.UPDATE_CLIENT_SUCCESS: {
+      const clients = state.clients.map((x) => {
+        if (x.id === action.payload.id) {
+          return { ...action.payload };
+        }
+        return x;
+      });
+      return {
+        ...state,
+        clients,
+      };
+    }
     case CLIENTS_ACTIONS.DELETE_CLIENT_SUCCESS: {
       const clients = state.clients.filter((x) => x.id !== action.payload);
       return {

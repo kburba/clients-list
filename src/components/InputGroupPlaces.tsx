@@ -25,7 +25,7 @@ const InputGroupPlaces = ({
   setValue,
 }: Props) => {
   return (
-    <div className={classnames('inputGroup', { error: errors[param] })}>
+    <div className={classnames('inputGroup places', { error: errors[param] })}>
       <label htmlFor={param}>{title}</label>
       <Controller
         control={control}
@@ -34,7 +34,12 @@ const InputGroupPlaces = ({
           <GooglePlacesAutocomplete
             apiKey={process.env.REACT_APP_GOOGLE_PLACES_API_KEY}
             ref={ref}
+            onLoadFailed={(error) =>
+              console.error('Could not inject Google script', error)
+            }
             selectProps={{
+              value: value,
+              placeholder: value,
               onChange: (e: any) => setValue('address', e.label),
             }}
           />

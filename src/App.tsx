@@ -1,9 +1,9 @@
-import React from 'react'
-import Clients from './containers/clients/Clients'
-import './styles/_index.scss'
+import React from 'react';
+import Clients from './containers/clients/Clients';
+import './styles/_index.scss';
 
 function App() {
-  return <Clients />
+  return <Clients />;
 }
 
-export default App
+export default App;

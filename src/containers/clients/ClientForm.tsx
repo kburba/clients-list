@@ -7,12 +7,12 @@ import { TClientNew } from '../../store/types/clients.types';
 import InputGroupPlaces from '../../components/InputGroupPlaces';
 
 type Props = {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSave: (values: TClientNew) => void;
   defaultValues?: TClientNew;
+  handleClose: () => void;
 };
 export default function ClientForm({
-  setIsOpen,
+  handleClose,
   onSave,
   defaultValues,
 }: Props) {
@@ -25,10 +25,7 @@ export default function ClientForm({
     formState: { errors },
   } = useForm<TClientNew>({ resolver, defaultValues });
 
-  const onSubmit = handleSubmit((data) => {
-    onSave(data);
-    setIsOpen(false);
-  });
+  const onSubmit = handleSubmit((data) => onSave(data));
 
   return (
     <form onSubmit={onSubmit}>
@@ -58,11 +55,7 @@ export default function ClientForm({
         errors={errors}
       />
       <div className="inline text-right">
-        <button
-          type="button"
-          className="kbbutton"
-          onClick={() => setIsOpen(false)}
-        >
+        <button type="button" className="kbbutton" onClick={handleClose}>
           Close
         </button>
         <button type="submit" className="kbbutton primary">

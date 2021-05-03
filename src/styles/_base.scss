@@ -113,6 +113,24 @@ input.error::-webkit-input-placeholder {
   position: relative;
   margin-bottom: 15px;
 
+  &.places {
+    & > div > div {
+      padding: 4px 6px;
+      border-radius: 8px;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    &.error {
+      & > div > div {
+        border-color: rgba(255, 0, 0, 0.5);
+        &:focus {
+          box-shadow: 0 0 6px rgba(255, 0, 0, 0.1);
+        }
+      }
+    }
+  }
+
   .errorMsg {
     background: none;
   }

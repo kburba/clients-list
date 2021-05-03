@@ -10,7 +10,18 @@ export type ClientsActions =
   | SaveClient
   | SaveClientSuccess
   | DeleteClient
-  | DeleteClientSuccess;
+  | DeleteClientSuccess
+  | UpdateClient
+  | UpdateClientSuccess;
+
+export interface UpdateClient {
+  type: typeof CLIENTS_ACTIONS.UPDATE_CLIENT;
+  payload: TClient;
+}
+export interface UpdateClientSuccess {
+  type: typeof CLIENTS_ACTIONS.UPDATE_CLIENT_SUCCESS;
+  payload: TClient;
+}
 
 export interface DeleteClient {
   type: typeof CLIENTS_ACTIONS.DELETE_CLIENT;

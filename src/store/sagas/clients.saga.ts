@@ -3,10 +3,37 @@ import {
   deleteClientSuccess,
   getClientsSuccess,
   saveClientSuccess,
+  updateClientSuccess,
 } from '../actions/clients.actions';
 import { CLIENTS_ACTIONS } from '../actions/types';
-import { DeleteClient, SaveClient, TClient } from '../types/clients.types';
+import {
+  DeleteClient,
+  SaveClient,
+  TClient,
+  UpdateClient,
+} from '../types/clients.types';
 import { v4 as uuidv4 } from 'uuid';
+
+export function* updateClientSaga({ payload }: UpdateClient) {
+  try {
+    const currClients = localStorage.getItem('clients');
+    if (currClients) {
+      const parsedClients: TClient[] = JSON.parse(currClients);
+      const updatedClients = parsedClients.map((x) => {
+        if (x.id === payload.id) {
+          return {
+            ...payload,
+          };
+        }
+        return x;
+      });
+      localStorage.setItem('clients', JSON.stringify(updatedClients));
+      yield put(updateClientSuccess(payload));
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+}
 
 export function* deleteClientsSaga({ payload }: DeleteClient) {
   try {
@@ -35,6 +62,7 @@ export function* saveClientSaga({ payload }: SaveClient) {
     console.error(error.message);
   }
 }
+
 export function* getClientsSaga() {
   try {
     const CLIENTS_FROM_STORAGE = localStorage.getItem('clients');
@@ -47,7 +75,8 @@ export function* getClientsSaga() {
 }
 
 export default function* watchClientsSaga() {
+  yield takeLatest(CLIENTS_ACTIONS.DELETE_CLIENT, deleteClientsSaga);
   yield takeLatest(CLIENTS_ACTIONS.GET_CLIENTS, getClientsSaga);
   yield takeLatest(CLIENTS_ACTIONS.SAVE_CLIENT, saveClientSaga);
-  yield takeLatest(CLIENTS_ACTIONS.DELETE_CLIENT, deleteClientsSaga);
+  yield takeLatest(CLIENTS_ACTIONS.UPDATE_CLIENT, updateClientSaga);
 }

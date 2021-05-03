@@ -7,8 +7,23 @@ import {
   SaveClientSuccess,
   TClient,
   TClientNew,
+  UpdateClient,
+  UpdateClientSuccess,
 } from '../types/clients.types';
 import { CLIENTS_ACTIONS } from './types';
+
+export function updateClient(client: TClient): UpdateClient {
+  return {
+    type: CLIENTS_ACTIONS.UPDATE_CLIENT,
+    payload: client,
+  };
+}
+export function updateClientSuccess(client: TClient): UpdateClientSuccess {
+  return {
+    type: CLIENTS_ACTIONS.UPDATE_CLIENT_SUCCESS,
+    payload: client,
+  };
+}
 
 export function deleteClient(id: string): DeleteClient {
   return {
