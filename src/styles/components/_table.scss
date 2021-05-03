@@ -28,6 +28,10 @@ table.kbtable {
       td {
         padding: 15px;
         border: 0;
+
+        &.buttons {
+          display: flex;
+        }
       }
     }
   }

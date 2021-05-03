@@ -7,9 +7,16 @@ export enum TableValueTypes {
   DATE = 'DATE',
 }
 
+export enum TableButtonTypes {
+  EDIT = 'EDIT',
+  DELETE = 'DELETE',
+}
+
 export type TableColumn = {
   title: string;
   valueKey: string;
+  type?: 'buttons';
+  buttons?: TableButtonTypes[];
   valueType?: TableValueTypes.DATE;
   onClick?: TableClickSettings;
 };
@@ -21,5 +28,5 @@ export type TableClickSettings = {
 };
 export type TableAction = {
   key: string;
-  action: () => void;
+  action: (item: any) => void;
 };

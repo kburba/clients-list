@@ -1,4 +1,6 @@
 import {
+  DeleteClient,
+  DeleteClientSuccess,
   GetClients,
   GetClientsSuccess,
   SaveClient,
@@ -7,6 +9,19 @@ import {
   TClientNew,
 } from '../types/clients.types';
 import { CLIENTS_ACTIONS } from './types';
+
+export function deleteClient(id: string): DeleteClient {
+  return {
+    type: CLIENTS_ACTIONS.DELETE_CLIENT,
+    payload: id,
+  };
+}
+export function deleteClientSuccess(id: string): DeleteClientSuccess {
+  return {
+    type: CLIENTS_ACTIONS.DELETE_CLIENT_SUCCESS,
+    payload: id,
+  };
+}
 
 export function saveClient(client: TClientNew): SaveClient {
   return {

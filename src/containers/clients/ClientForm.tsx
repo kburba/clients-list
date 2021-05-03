@@ -1,17 +1,21 @@
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import InputGroup from '../../components/InputGroup';
 import useYupValidationResolver from '../../hooks/useYupValidatorResolver';
 import { TClientNew } from '../../store/types/clients.types';
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import InputGroupPlaces from '../../components/InputGroupPlaces';
 
 type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSave: (values: TClientNew) => void;
+  defaultValues?: TClientNew;
 };
-export default function ClientForm({ setIsOpen, onSave }: Props) {
+export default function ClientForm({
+  setIsOpen,
+  onSave,
+  defaultValues,
+}: Props) {
   const resolver = useYupValidationResolver(validationSchema);
   const {
     register,
@@ -19,7 +23,7 @@ export default function ClientForm({ setIsOpen, onSave }: Props) {
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<TClientNew>({ resolver });
+  } = useForm<TClientNew>({ resolver, defaultValues });
 
   const onSubmit = handleSubmit((data) => {
     onSave(data);

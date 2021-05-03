@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TableColumn } from './table.types';
+import { TableAction, TableButtonTypes, TableColumn } from './table.types';
 import TextMatchingFilter from './TextMatchingFilter';
 import { formatCellValue, getFilterMatch, useSortBy } from './utils';
 
 type TableProps = {
+  actions?: TableAction[];
   columns: TableColumn[];
   data: any[];
 };
 
-export default function Table({ columns, data }: TableProps) {
+export default function Table({ actions, columns, data }: TableProps) {
   const [filter, setFilter] = useState('');
   const filteredData = filter
     ? data.filter((item) =>
@@ -56,6 +57,46 @@ export default function Table({ columns, data }: TableProps) {
             return (
               <tr key={rowIdx}>
                 {columns.map((column, colIdx) => {
+                  if (column.type === 'buttons') {
+                    return (
+                      <td key={`${colIdx}-${column.title}`} className="buttons">
+                        {column.buttons &&
+                          column.buttons.indexOf(TableButtonTypes.EDIT) >
+                            -1 && (
+                            <button
+                              type="button"
+                              className="kbbutton small"
+                              onClick={() =>
+                                actions &&
+                                actions
+                                  .find((x) => x.key === TableButtonTypes.EDIT)
+                                  ?.action(item)
+                              }
+                            >
+                              Edit
+                            </button>
+                          )}
+                        {column.buttons &&
+                          column.buttons.indexOf(TableButtonTypes.DELETE) >
+                            -1 && (
+                            <button
+                              type="button"
+                              className="kbbutton small"
+                              onClick={() =>
+                                actions &&
+                                actions
+                                  .find(
+                                    (x) => x.key === TableButtonTypes.DELETE
+                                  )
+                                  ?.action(item)
+                              }
+                            >
+                              Delete
+                            </button>
+                          )}
+                      </td>
+                    );
+                  }
                   const cellValue = formatCellValue(
                     item[column.valueKey],
                     column.valueType

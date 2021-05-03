@@ -147,6 +147,11 @@ button.kbbutton {
   cursor: pointer;
   margin-right: 5px;
 
+  &.small {
+    padding: 3px 6px;
+    border-radius: 2px;
+  }
+
   &.primary {
     background-color: #c5f1ff;
     padding: 12px 25px;
