@@ -1,9 +1,11 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import InputGroup from '../../components/InputGroup';
 import useYupValidationResolver from '../../hooks/useYupValidatorResolver';
 import { TClientNew } from '../../store/types/clients.types';
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import InputGroupPlaces from '../../components/InputGroupPlaces';
 
 type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,6 +15,8 @@ export default function ClientForm({ setIsOpen, onSave }: Props) {
   const resolver = useYupValidationResolver(validationSchema);
   const {
     register,
+    control,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<TClientNew>({ resolver });
@@ -42,10 +46,11 @@ export default function ClientForm({ setIsOpen, onSave }: Props) {
         register={register}
         errors={errors}
       />
-      <InputGroup
+      <InputGroupPlaces
         param="address"
         title="Address"
-        register={register}
+        control={control}
+        setValue={setValue}
         errors={errors}
       />
       <div className="inline text-right">

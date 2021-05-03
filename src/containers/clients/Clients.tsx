@@ -20,7 +20,6 @@ export default function Clients() {
   }, [dispatch]);
 
   function handleSave(client: TClientNew) {
-    console.log('saved', client);
     dispatch(saveClient(client));
   }
 

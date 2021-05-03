@@ -9,4 +9,9 @@
   box-shadow: 1px 0px 5px lightgrey;
   border-radius: 8px;
   min-width: 300px;
+  background-color: white;
+}
+
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.1) !important;
 }
